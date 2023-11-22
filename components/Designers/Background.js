@@ -9,10 +9,8 @@ function Background({ children }) {
       resizeMode="repeat"
       style={styles.background}
     >
-      <KeyboardAvoidingView style={styles.container} behavior="height">
-        <ScrollView contentContainerStyle={{flex: 1}}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
           {children}
-        </ScrollView>
       </KeyboardAvoidingView>
     </ImageBackground>
   );
@@ -32,6 +30,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop:150
   },
 });
 

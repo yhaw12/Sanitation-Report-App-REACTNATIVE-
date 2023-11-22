@@ -54,9 +54,12 @@ const styles = StyleSheet.create({
     height: 300,
     left: 0,
     right: 0,
-    bottom: 80,
+    bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(224, 224, 224, 0.8)',
+    borderTopLeftRadius: 50,
+    // borderTopRightRadius: 50
   },
   loginButton: {
     width: '80%',

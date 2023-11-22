@@ -12,6 +12,7 @@ import {passwordValidator} from '../../components/validators/PasswordValidator';
 
 
 import SocialsIcons from '../../components/Designers/SocialsIcons';
+import HeaderLogo from '../../components/Designers/HeaderLogo';
 
 function SignUp({ navigation }) {
   const [values, setValues] = useState({
@@ -69,14 +70,15 @@ function SignUp({ navigation }) {
   return (
     <Background>
       <BackButton goBack={() => navigation.goBack()} />
+      <HeaderLogo/>
       <Header>Create Account</Header>
       <MyTextInput
         label="Name"
         returnKeyType="next"
         value={values.name}
         onChangeText={(text) => setValues({ ...values, name: text })}
-        error={!!errors.name}
-        errorText={errors.name}
+        error={errors.name}
+        placeholder = "Type Name"
         icon="user"
       />
       <MyTextInput
@@ -84,27 +86,27 @@ function SignUp({ navigation }) {
         returnKeyType="next"
         value={values.email}
         onChangeText={(text) => setValues({ ...values, email: text })}
-        error={!!errors.email}
-        errorText={errors.email}
+        error={errors.email}
+        placeholder = "Type Email"
         autoCapitalize="none"
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
         icon="envelope"
       />
-      <MyTextInput
+      <MyTextInput 
         label="Password"
         returnKeyType="done"
         value={values.password}
         onChangeText={(text) => setValues({ ...values, password: text })}
-        error={!!errors.password}
-        errorText={errors.password}
+        error={errors.password}
+        placeholder = "Type Password"
         secureTextEntry
         icon={showPass ? "lock": "unlock"}
         onIconPress ={toggleShowPass}
       />
 
-      <View style={styles.centeredContainer}>
+      <View style={{marginTop: 20}}>
         <TouchableOpacity style={styles.loginButton} onPress={handleSignUp} >
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>

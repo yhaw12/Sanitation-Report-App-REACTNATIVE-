@@ -1,65 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
-import Dashboard from '../../parts/OtherScreens/Dashboard';
+import React from 'react';
+import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native';
 
-const DrawerItem = ({ title, onPress }) => {
-  const [colorValue] = useState(new Animated.Value(0));
-
-  const handlePress = () => {
-    Animated.timing(colorValue, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: false,
-    }).start(() => {
-      onPress();
-      Animated.timing(colorValue, {
-        toValue: 0,
-        duration: 500,
-        useNativeDriver: false,
-      }).start();
-    });
-  };
-
-  const colorInterpolation = colorValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['white', 'lightgray'],
-  });
-
+function CustomDrawer({ sidebarWidth, closeSidebar }) {
   return (
-    <TouchableOpacity onPress={handlePress}>
-      <Animated.View style={[styles.drawerItem, { backgroundColor: colorInterpolation }]}>
-        <Text style={styles.drawerItemText}>{title}</Text>
-      </Animated.View>
-    </TouchableOpacity>
+    <Animated.View style={[styles.sidebar, { transform: [{ translateX: sidebarWidth }] }]}>
+      <TouchableOpacity onPress={closeSidebar} style={styles.closeButton}>
+        <Text style={styles.closeButtonText}>Close</Text>
+      </TouchableOpacity>
+      {/* Add more sidebar content here */}
+    </Animated.View>
   );
-};
+}
 
-const CustomDrawer = ({ navigation, sidebarWidth }) => {
-  return (
-    <Animated.View style={[styles.container, { left: sidebarWidth }]}>
+const styles = StyleSheet.create({
+  sidebar: {
+    position: 'absolute',
+    width: 250, // assuming the width of the sidebar is 250
+    height: '100%',
+    backgroundColor: '#fff',
+    padding: 10,
+  },
+  closeButton: {
+    alignSelf: 'flex-end',
+  },
+  closeButtonText: {
+    fontSize: 18,
+    color: '#f00',
+  },
+});
+
+export default CustomDrawer;
+
+
+/* <Animated.View style={[styles.container, { left: sidebarWidth }]}>
       <DrawerItem title="Dashboard" onPress={() => navigation.navigate('Dashboard')} />
       <DrawerItem title="Profile" onPress={() => navigation.navigate('Profile')} />
       <DrawerItem title="Contact Us" onPress={() => navigation.navigate('ContactUs')} />
-      <DrawerItem title="Sign Out" onPress={() => { /* handle logout here */ }} />
-    </Animated.View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    width: 250,
-    backgroundColor: 'white',
-  },
-  drawerItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: 'lightgray',
-  },
-  drawerItemText: {
-    fontSize: 16,
-  },
-});
-export default CustomDrawer;
+      <DrawerItem title="Sign Out" onPress={() => { /* handle logout here */ 
+    // </Animated.View> 

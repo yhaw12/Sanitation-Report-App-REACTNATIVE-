@@ -12,6 +12,7 @@ import {passwordValidator} from '../../components/validators/PasswordValidator';
 
 import MyTextInput from '../../components/TextInput';
 import SocialsIcons from '../../components/Designers/SocialsIcons';
+import HeaderLogo from '../../components/Designers/HeaderLogo';
 
 
 
@@ -47,6 +48,11 @@ function Login({ navigation }) {
 
     setErrors({ email: '', password: '' });
 
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Dashboard' }],
+    })
+
     axios.defaults.withCredentials = true;
         axios.post('http://localhost:8081/login', values)
         .then(res => {
@@ -57,7 +63,11 @@ function Login({ navigation }) {
             }
         })
         .catch(err => console.log(err));
+
+
   }
+
+
   const toggleShowPass = () => {
     setShowPass(!showPass);
   };
@@ -66,9 +76,8 @@ function Login({ navigation }) {
     <Background>
       <BackButton goBack={navigation.goBack} />
 
+       <HeaderLogo/>
       <Header>Welcome back.</Header>
-
-      
       <MyTextInput
         label="Email"
         returnKeyType="next"
@@ -124,7 +133,7 @@ function Login({ navigation }) {
 
 const styles = StyleSheet.create({
   loginButton: {
-    width: 300,
+    width: 320,
     height: 60,
     backgroundColor: 'blue',
     padding: 10,
@@ -137,7 +146,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 40,
     fontWeight: 'bold',
-    alignItems: 'center',
+    alignSelf: 'center',
     textTransform: 'uppercase',
   },
   forgotPassword: {

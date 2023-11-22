@@ -12,7 +12,6 @@ import ResetPasswords from '../borla-app/parts/Credentials/ResetPasswords.js'
 // DRAWER IMPORTS
 import Profile from '../borla-app/parts/OtherScreens/Profile.js';
 import ContactUs from '../borla-app/parts/OtherScreens/ContactUs.js'
-import MakeReports from './components/Designers/MakeReports.js';
 // import SettingScreen from '../BorlaApp/parts/OtherScreens/SettingsScreen';
 
 
@@ -42,8 +41,7 @@ function App() {
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
         <Stack.Screen name="ResetScreen" component={ResetPasswords} options={{ headerShown: false }} />
-        <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} />
-        <Stack.Screen name="MakeReports" component={MakeReports} options={{ headerShown: false }} />
+        <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} /> 
       </Stack.Navigator>
     );
   }
@@ -52,7 +50,6 @@ function App() {
     return (
       <Stack.Navigator>
       <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} />
-      <Stack.Screen name="MakeReports" component={MakeReports} options={{ headerShown: false }} />
       <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
       <Stack.Screen name="ContactUs" component={ContactUs} options={{ headerShown: false }} />
       {/* ... (other screens) */}

@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     fontSize: 31,
     color: 'blue',
     fontWeight: 'bold',
-    paddingVertical: 12,
+    paddingVertical: 2,
     alignSelf: 'center',
-    marginBottom: 20,
-    marginTop: 50
+    marginBottom: 5,
+    marginTop: 2
   },
   image:{
     width: 40,

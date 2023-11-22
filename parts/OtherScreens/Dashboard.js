@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet, Animated, KeyboardAvoidingView, Platform } from 'react-native';
+import {SafeAreaView,ScrollView, View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet, Animated, KeyboardAvoidingView, Platform } from 'react-native';
 // import { DrawerActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Topbar from '../../components/Topbar';
 import CustomDrawer from '../../components/Designers/CustomDrawer';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+// import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-import MakeReports from '../../components/Designers/MakeReports';
 import ChatAction from '../../components/Designers/ChatAction';
 
 const renderAppointmentCard = ({ item }) => (
@@ -28,9 +27,8 @@ const renderAppointmentCard = ({ item }) => (
 );
 
 
-function Dashboard({navigation}) {
+function Dashboard({navigation, chooseImage, takePicture, handleEmojiSelected}) {
   
-
   useEffect(() => {
     // Set the token when the component mounts
     AsyncStorage.setItem('token', JSON.stringify(true));
@@ -81,19 +79,7 @@ function Dashboard({navigation}) {
       backgroundColor: '#e2caf8',
       titleColor: '#8a2be2',
     },
-    {
-      id: 4,
-      title: 'Report 4',
-      startDate: '2023-05-19',
-      endDate: '2023-05-19',
-      attendees: [
-        { id: 15, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar2.png' },
-        { id: 16, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar4.png' },
-        { id: 17, remoteImage: 'https://bootdey.com/img/Content/avatar/avatar6.png' },
-      ],
-      backgroundColor: '#d8e4fa',
-      titleColor: '#6495ed',
-    },
+    
     // Add more appointments here
   ]);
 
@@ -107,6 +93,7 @@ function Dashboard({navigation}) {
       duration: 250,
       useNativeDriver: false,
     }).start();
+    setSidebarOpen(true);
   };
   const closeSidebar = () => {
     Animated.timing(sidebarWidth, {
@@ -114,11 +101,7 @@ function Dashboard({navigation}) {
       duration: 250,
       useNativeDriver: false,
     }).start();
-  };
-
-  const navigateToMakeReports = () => {
-    // Navigate to the MakeReports screen
-    navigation.navigate('MakeReports');
+    setSidebarOpen(false);
   };
 
  
@@ -136,39 +119,37 @@ function Dashboard({navigation}) {
   };
 
   return (
+    <SafeAreaView style={styles.container}>
+    
+    <Topbar openSidebar={openSideBar} />
 
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
-         <Topbar/>
-        <View style={styles.container}>
-        <Topbar openSidebar={openSideBar} />
+    <TextInput
+      style={styles.searchInput}
+      placeholder="Search"
+      value={searchQuery}
+      onChangeText={setSearchQuery}
+    />
+    <Text style={styles.title}> My Reports</Text>
 
-        
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search"
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-        <Text style={styles.title}> My Reports</Text>
-        <FlatList 
-          contentContainerStyle={styles.listContainer}
-          data={appointments.filter(searchFilter)}
-          renderItem={renderAppointmentCard}
-          keyExtractor={(item) => item.id.toString()}
-        />
+    <ScrollView>
+      <FlatList 
+        contentContainerStyle={styles.listContainer}
+        data={appointments.filter(searchFilter)}
+        renderItem={renderAppointmentCard}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </ScrollView>
+    
 
+    <CustomDrawer sidebarWidth={sidebarWidth} closeSidebar={closeSidebar} /> 
 
-       <CustomDrawer  sidebarWidth={sidebarWidth} />
-
-
-        <View >
-            <ChatAction />
-        </View>
-      </View>      
-      </KeyboardAvoidingView>
+    <View style={{marginTop: 5}}>
+    <ChatAction chooseImage={chooseImage} takePicture={takePicture} handleEmojiSelected={handleEmojiSelected} />
+    </View>
+  
+    </SafeAreaView>
+          
+      
   )
 }
 const styles = StyleSheet.create({
@@ -177,31 +158,40 @@ const styles = StyleSheet.create({
     padding: 20,
     
   },
+  // chatActionContainer: {
+  //   position: 'absolute',
+  //   bottom: 0,
+  //   width: '100%',
+  //   alignItems: 'center',
+  //   padding: 10,
+  // },
   listContainer: {
     paddingHorizontal: 10,
     
   },
   title: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   dates:{
     flexDirection: 'column'
   },
   searchInput: {
-    height: 40,
+    height: 50,
     borderWidth: 2,
     borderRadius: 5,
     borderColor: '#A9A9A9',
     marginBottom: 10,
     paddingHorizontal: 10,
+    paddingVertical: 10, 
+    fontSize: 17, fontWeight: 'bold'
   },
   card: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    marginBottom: 10,
     padding: 5,
     borderRadius: 5,
   },

@@ -3,7 +3,7 @@ import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 
 
-function Topbar({ navigation, openSideBar }) {
+function Topbar({ navigation, openSideBar, closeSiderBar }) {
 
   const handleProfileClick = () => {
     openSideBar();
@@ -26,11 +26,12 @@ function Topbar({ navigation, openSideBar }) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    flex: 1, 
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    marginTop: 60,
+    marginBottom: 20
   },
   text: {
     fontSize: 18,
