@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {SafeAreaView,ScrollView, View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet, Animated, KeyboardAvoidingView, Platform } from 'react-native';
-// import { DrawerActions } from '@react-navigation/native';
+import {SafeAreaView, View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet, Animated} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Topbar from '../../components/Topbar';
 import CustomDrawer from '../../components/Designers/CustomDrawer';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
 import ChatAction from '../../components/Designers/ChatAction';
+
 
 const renderAppointmentCard = ({ item }) => (
   <View style={[styles.card, { backgroundColor: item.backgroundColor }]}>
@@ -27,7 +26,7 @@ const renderAppointmentCard = ({ item }) => (
 );
 
 
-function Dashboard({navigation, chooseImage, takePicture, handleEmojiSelected}) {
+function Dashboard({navigation}) {
   
   useEffect(() => {
     // Set the token when the component mounts
@@ -83,26 +82,20 @@ function Dashboard({navigation, chooseImage, takePicture, handleEmojiSelected}) 
     // Add more appointments here
   ]);
 
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarWidth] = useState(new Animated.Value(-250)); // assuming the width of the sidebar is 250
+  // const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(new Animated.Value(-250)); 
 
+  // sidebar code
+  const animateSidebar = () => {
+    const showingSidebar = sidebarWidth._value < 0;
 
-  const openSideBar = () => {
     Animated.timing(sidebarWidth, {
-      toValue: 0,
-      duration: 250,
-      useNativeDriver: false,
+        toValue: showingSidebar ? 0 : -250,
+        duration: 250,
+        useNativeDriver: false,
     }).start();
-    setSidebarOpen(true);
   };
-  const closeSidebar = () => {
-    Animated.timing(sidebarWidth, {
-      toValue: -250,
-      duration: 250,
-      useNativeDriver: false,
-    }).start();
-    setSidebarOpen(false);
-  };
+
 
  
   // const fetchData = () => {
@@ -120,8 +113,12 @@ function Dashboard({navigation, chooseImage, takePicture, handleEmojiSelected}) 
 
   return (
     <SafeAreaView style={styles.container}>
-    
-    <Topbar openSidebar={openSideBar} />
+
+  <Animated.View style={{ position: 'absolute', width: 250, height: '100%', left: sidebarWidth, bottom: 0, zIndex: 200 }}>
+    <CustomDrawer />
+  </Animated.View>
+
+  <Topbar animatedSidebar={animateSidebar} />
 
     <TextInput
       style={styles.searchInput}
@@ -131,40 +128,29 @@ function Dashboard({navigation, chooseImage, takePicture, handleEmojiSelected}) 
     />
     <Text style={styles.title}> My Reports</Text>
 
-    <ScrollView>
       <FlatList 
         contentContainerStyle={styles.listContainer}
         data={appointments.filter(searchFilter)}
         renderItem={renderAppointmentCard}
         keyExtractor={(item) => item.id.toString()}
       />
-    </ScrollView>
     
 
-    <CustomDrawer sidebarWidth={sidebarWidth} closeSidebar={closeSidebar} /> 
-
     <View style={{marginTop: 5}}>
-    <ChatAction chooseImage={chooseImage} takePicture={takePicture} handleEmojiSelected={handleEmojiSelected} />
+        <ChatAction />
     </View>
   
-    </SafeAreaView>
-          
-      
+    </SafeAreaView>   
   )
 }
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
     
   },
-  // chatActionContainer: {
-  //   position: 'absolute',
-  //   bottom: 0,
-  //   width: '100%',
-  //   alignItems: 'center',
-  //   padding: 10,
-  // },
   listContainer: {
     paddingHorizontal: 10,
     

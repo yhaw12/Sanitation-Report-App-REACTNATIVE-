@@ -3,25 +3,17 @@ import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 
 
-function Topbar({ navigation, openSideBar, closeSiderBar }) {
-
-  const handleProfileClick = () => {
-    openSideBar();
-  };
+function Topbar({ animatedSidebar }) {
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Hello Paul Akuffo</Text>
-      <TouchableOpacity onPress={handleProfileClick}>
+      <TouchableOpacity onPress={animatedSidebar}>
         <Image source={require('../assets/profile.jpg')} style={styles.image} />
       </TouchableOpacity>
     </View>
   );
 }
-
-
-
-
 
 const styles = StyleSheet.create({
   container: {

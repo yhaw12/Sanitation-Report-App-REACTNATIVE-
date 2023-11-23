@@ -1,32 +1,19 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, KeyboardAvoidingView  } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import Background from '../../components/Designers/Background';
 import BackButton from '../../components/Designers/BackButton';
 import Header from '../../components/Header';
-
-import axios from 'axios'
-
 import {emailValidator} from '../../components/validators/EmailValidator'
 import {passwordValidator} from '../../components/validators/PasswordValidator';
-
-
 import MyTextInput from '../../components/TextInput';
 import SocialsIcons from '../../components/Designers/SocialsIcons';
 import HeaderLogo from '../../components/Designers/HeaderLogo';
-
+import axios from 'axios'
 
 
 function Login({ navigation }) {
-  const [values, setValues] = useState({
-    email: '',
-    password: '',
-  });
-
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-  });
-
+  const [values, setValues] = useState({email: '', password: '',});
+  const [errors, setErrors] = useState({email: '', password: '',});
   const [showPass, setShowPass] = useState(true)
 
   function handleSubmit() {
@@ -63,8 +50,6 @@ function Login({ navigation }) {
             }
         })
         .catch(err => console.log(err));
-
-
   }
 
 

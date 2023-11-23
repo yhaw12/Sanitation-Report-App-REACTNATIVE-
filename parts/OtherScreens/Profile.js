@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-function Profile() {
+function Profile({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>

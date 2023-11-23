@@ -11,12 +11,9 @@ import ResetPasswords from '../borla-app/parts/Credentials/ResetPasswords.js'
 
 // DRAWER IMPORTS
 import Profile from '../borla-app/parts/OtherScreens/Profile.js';
-import ContactUs from '../borla-app/parts/OtherScreens/ContactUs.js'
-// import SettingScreen from '../BorlaApp/parts/OtherScreens/SettingsScreen';
+import Support from './parts/OtherScreens/Support.js';
+import Settings from './parts/OtherScreens/Settings.js';
 
-
-// import Iconicons from 'react-native-vector-icons/Ionicons'
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const Stack = createStackNavigator();
 
@@ -51,32 +48,32 @@ function App() {
       <Stack.Navigator>
       <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} />
       <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
-      <Stack.Screen name="ContactUs" component={ContactUs} options={{ headerShown: false }} />
-      {/* ... (other screens) */}
+      <Stack.Screen name="Settings" component={Settings}  options={{ headerShown: false }}/>
+      <Stack.Screen name="Support" component={Support} options={{ headerShown: false }}/>
     </Stack.Navigator>
     );
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {/* Load to Home if not logged in, otherwise load to Dashboard */}
-        {isLoggedIn ? (
-          <Stack.Screen
-            name="AppStack"
-            component={AuthStack}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <Stack.Screen
-            name="AuthStack"
-            component={AppStack}
-            options={{ headerShown: false }}
-          />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+      <NavigationContainer>
+        <Stack.Navigator>
+          {/* Load to Home if not logged in, otherwise load to Dashboard */}
+          {!isLoggedIn ? (
+            <Stack.Screen
+              name="AuthStack"
+              component={AuthStack}
+              options={{ headerShown: false }}
+            />
+          ) : (
+            <Stack.Screen
+              name="AppStack"
+              component={AppStack}
+              options={{ headerShown: false }}
+            />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
 }
 
 export default App;
